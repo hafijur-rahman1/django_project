@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     # my app
     
     'myapp',
-    'album'
+    'album',
+    'storages'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'testproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,15 +127,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIR =  [os.path.join(BASE_DIR,'static')]
-STATIC_ROOT =   os.path.join(BASE_DIR, 'static_root')
+STATICFILES_DIR =  [ BASE_DIR / 'static']
+STATIC_ROOT =   BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # media 
 MEDIA_URL = '/media/'
 MEDIA_ROOT =   BASE_DIR / 'media/'
 
-STATIC_ROOT =   [BASE_DIR / 'staticfiles']
-STATICFILES_DIR =  [ BASE_DIR / 'static']
+AWS_ACCESS_KEY_ID = 'AKIARVGPJVYVGB6OFLTK'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'bucketeer-877dd773-51d8-45f1-bff8-64ae71ebc53d'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
